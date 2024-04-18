@@ -11,15 +11,13 @@ def prime_numbers(n):
    if n % 2 == 0 and n > 2:
        return False
    else:
-       bound = math.sqrt(n) + 1
-       for i in range(3, int(bound), 2):
+       for i in range(3, int(math.sqrt(n) + 1), 2):
            if n % i == 0:
                return False
        return True
 
 #to generate random prime numbers for p and q
 def generate_random_prime_number(bit_length = 8):
-
    while True:
        number = random.getrandbits(bit_length)
        if number % 2 != 0 and prime_numbers(number) and number.bit_length() == bit_length:
@@ -55,6 +53,9 @@ def public_exponent(e,eul):
             break
         else:
             e += 1
+    return e
+
+e=public_exponent(e,eul)
 
 #calculating d (private key)
 gcd, d, _ = extended_gcd(e, eul)
@@ -85,7 +86,7 @@ public_key = {'n': n, 'e': e}
 private_key = {'n': n, 'd': d}
 
 #encrypting and decrypting m (message)
-m= 11
+m= 112
 C = pow(m, e, n)
 M = pow(C, d, n)
 end_time = time.perf_counter()
@@ -97,6 +98,6 @@ print("n is: ", n, "\neul is: ", eul, "\ne is: ", e)
 print(f"factorised p and q from modulus of n are: {factorisedp}, {factorisedq}")
 print("Public Key:", public_key, "\nPrivate Key:", private_key)
 print("\nEncrypted Message:", C, "\nDecrypted Message:", M)
-print(f"Factorisation time: {time_taken:.4f} seconds")
+print(f"Factorisation time: {time_taken:.6f} seconds")
 
 
