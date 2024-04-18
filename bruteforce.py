@@ -1,6 +1,7 @@
 import math
 import random
 import time 
+from RSAprograms import public_exponent
 
 #to make sure number is prime 
 def prime_numbers(n):
@@ -19,13 +20,13 @@ def prime_numbers(n):
 
 #to generate random prime numbers for p and q
 def generate_random_prime_number(bit_length = 8):
-
    while True:
        number = random.getrandbits(bit_length)
        if number % 2 != 0 and prime_numbers(number) and number.bit_length() == bit_length:
            return number
 
-start = time.perf_counter()
+
+start_time = time.perf_counter()
 #generating random primes for p and q       
 p=generate_random_prime_number(8)
 q=generate_random_prime_number(8)
@@ -39,34 +40,32 @@ n=p*q
 eul=(p-1)*(q-1)
 e=3
 
-#to calculate extended gcd   
-start_time=time.perf_counter()  
+#encrypting m (message)
+m= 11
+public_e=public_exponent(e,eul)
+C = pow(m, e, n)
+
 # Brute force attack to find the private exponent d
-def brutedecrypt(e, n, C):
-    start_time = time.time()
+def brutedecrypt(e, n, C,m):
     attempts = 0
     d = 1
-    decrypted_message = ""
     while True:
         if pow(C,d, n) == m:
             break
         d += 1
         attempts += 1
-    end_time = time.time()
-    brute_force_time = end_time - start_time
-    return d, attempts, brute_force_time
+    return d, attempts
 
-d, attempts, brute_force_time = brutedecrypt(e, n, C)
-#D=pow(e,-1,eul)
+d, attempts = brutedecrypt(e, n, C,m)
+
 public_key = {'n': n, 'e': e}
 private_key = {'n': n, 'd': d}
-#encrypting and decrypting m (message)
-m= 11
-C = pow(m, e, n)
+
+
 end_time = time.perf_counter()
 time_taken = (end_time - start_time) * 1000  # Convert to milliseconds
 
 # Print the results
-
+print(f"p is: {p} and q is: {q}")
 print(f"Brute force attack succeeded after {attempts} attempts! Private exponent d is: {d}")
-print(f"Brute force attack took: {time_taken} seconds")
+print(f"Brute force attack took: {time_taken:.4f} seconds")

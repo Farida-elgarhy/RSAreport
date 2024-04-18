@@ -25,7 +25,7 @@ def generate_random_prime_number(bit_length = 8):
        if number % 2 != 0 and prime_numbers(number) and number.bit_length() == bit_length:
            return number
 
-start = time.perf_counter()
+start_time = time.perf_counter()
 #generating random primes for p and q       
 p=generate_random_prime_number(8)
 q=generate_random_prime_number(8)
@@ -39,8 +39,7 @@ n=p*q
 eul=(p-1)*(q-1)
 e=3
 
-#to calculate extended gcd   
-start_time=time.perf_counter()    
+#to calculate extended gcd     
 def extended_gcd(a, b):
     x0, x1, y0, y1 = 1, 0, 0, 1
     while b:
@@ -50,11 +49,15 @@ def extended_gcd(a, b):
     return a, x0, y0
 
 #finds a suitable public exponent(e)
-while e < eul:
-    if extended_gcd(e, eul)[0] == 1:
-        break
-    else:
-        e += 1
+def public_exponent(e,eul):
+    while e < eul:
+        if extended_gcd(e, eul)[0] == 1:
+            break
+        else:
+            e += 1
+
+#calculating d (private key)
+gcd, d, _ = extended_gcd(e, eul)
 
 #factorising n to get p and q
 def factorize(n):
@@ -76,8 +79,6 @@ factors=factorize(n)
 factorisedp=factors[1]
 factorisedq=factors[0]
 
-#calculating d (private key)
-gcd, d, _ = extended_gcd(e, eul)
 
 #calculating public and private key
 public_key = {'n': n, 'e': e}
