@@ -38,5 +38,45 @@ n=p*q
 eul=(p-1)*(q-1)
 e=3
 
+#to calculate extended gcd   
+start_time=time.time()    
+def extended_gcd(a, b):
+    x0, x1, y0, y1 = 1, 0, 0, 1
+    while b:
+        q, a, b = a // b, b, a % b
+        x0, x1 = x1, x0 - q * x1
+        y0, y1 = y1, y0 - q * y1
+    return a, x0, y0
+
+#finds a suitable public exponent(e)
+while e < eul:
+    if extended_gcd(e, eul)[0] == 1:
+        break
+    else:
+        e += 1
+
+#factorising n to get p and q
+def factorize(n):
+    factors=[]
+    d=2
+    while n>1:
+        while n%d==0:
+            factors.append(d)
+            n//=d
+        d+=1
+        if d*d>n:
+            if n>1:
+                factors.append(n)
+            break
+    return factors
+
+#calculating d (private key)
+gcd, d, _ = extended_gcd(e, eul)
+
+#calculating public and private key
+public_key = {'n': n, 'e': e}
+private_key = {'n': n, 'd': d}
+
+#print statements
 print(f"p is: {p} and q is: {q}")
 print("n is: ", n, "\neul is: ", eul, "\ne is: ", e)
