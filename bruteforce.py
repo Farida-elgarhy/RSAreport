@@ -65,7 +65,7 @@ def brutedecrypt(e, n, C):
         d += 1
 
 d, attempts= brutedecrypt(e,n,C)
-
+d = d % eul  # Ensure d is positive
 M = pow(C, d, n)
 public_key = {'n': n, 'e': e}
 private_key = {'n': n, 'd': d}

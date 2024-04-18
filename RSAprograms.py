@@ -27,7 +27,6 @@ start_time = time.perf_counter()
 #generating random primes for p and q       
 p=generate_random_prime_number(8)
 q=generate_random_prime_number(8)
-
 #ensuring that p and q are not the same number
 while p == q:
     q = generate_random_prime_number(8)
@@ -59,6 +58,7 @@ e=public_exponent(e,eul)
 
 #calculating d (private key)
 gcd, d, _ = extended_gcd(e, eul)
+d = d % eul  # Ensure d is positive
 
 #factorising n to get p and q
 def factorize(n):
