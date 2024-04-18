@@ -70,6 +70,11 @@ def factorize(n):
             break
     return factors
 
+#factorise n to obtain p and q
+factors=factorize(n)
+factorisedp=factors[1]
+factorisedq=factors[0]
+
 #calculating d (private key)
 gcd, d, _ = extended_gcd(e, eul)
 
@@ -77,6 +82,19 @@ gcd, d, _ = extended_gcd(e, eul)
 public_key = {'n': n, 'e': e}
 private_key = {'n': n, 'd': d}
 
-#print statements
+#encrypting and decrypting m (message)
+m= 11
+C = pow(m, e, n)
+M = pow(C, d, n)
+end_time=time.time()
+time=end_time-start_time
+
+#print statements for results 
 print(f"p is: {p} and q is: {q}")
 print("n is: ", n, "\neul is: ", eul, "\ne is: ", e)
+print(f"factorised p and q from modulus of n are: {factorisedp}, {factorisedq}")
+print("Public Key:", public_key, "\nPrivate Key:", private_key)
+print("\nEncrypted Message:", C, "\nDecrypted Message:", M)
+print(f"Factorisation time: {time} seconds")
+
+
