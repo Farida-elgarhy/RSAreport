@@ -25,6 +25,7 @@ def generate_random_prime_number(bit_length = 8):
        if number % 2 != 0 and prime_numbers(number) and number.bit_length() == bit_length:
            return number
 
+start = time.perf_counter()
 #generating random primes for p and q       
 p=generate_random_prime_number(8)
 q=generate_random_prime_number(8)
@@ -39,7 +40,7 @@ eul=(p-1)*(q-1)
 e=3
 
 #to calculate extended gcd   
-start_time=time.time()    
+start_time=time.perf_counter()    
 def extended_gcd(a, b):
     x0, x1, y0, y1 = 1, 0, 0, 1
     while b:
@@ -86,8 +87,8 @@ private_key = {'n': n, 'd': d}
 m= 11
 C = pow(m, e, n)
 M = pow(C, d, n)
-end_time=time.time()
-time=end_time-start_time
+end_time = time.perf_counter()
+time_taken = (end_time - start_time) * 1000  # Convert to milliseconds
 
 #print statements for results 
 print(f"p is: {p} and q is: {q}")
@@ -95,6 +96,6 @@ print("n is: ", n, "\neul is: ", eul, "\ne is: ", e)
 print(f"factorised p and q from modulus of n are: {factorisedp}, {factorisedq}")
 print("Public Key:", public_key, "\nPrivate Key:", private_key)
 print("\nEncrypted Message:", C, "\nDecrypted Message:", M)
-print(f"Factorisation time: {time} seconds")
+print(f"Factorisation time: {time_taken:.4f} seconds")
 
 
