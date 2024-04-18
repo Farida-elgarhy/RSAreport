@@ -16,3 +16,16 @@ def prime_numbers(n):
            if n % i == 0:
                return False
        return True
+
+#to generate random prime numbers for p and q
+def generate_random_prime_number(bit_length = 8):
+
+   while True:
+       number = random.getrandbits(bit_length)
+       if number % 2 != 0 and prime_numbers(number) and number.bit_length() == bit_length:
+           return number
+       
+p=generate_random_prime_number(8)
+q=generate_random_prime_number(8)
+
+print(f"p is: {p} and q is: {q}")
