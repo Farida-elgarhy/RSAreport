@@ -5,6 +5,21 @@ from RSAprograms import public_exponent
 
 # from keygeneration import generate_random_prime_number
 
+#getting p and q
+p = int(input("Enter the value of p: "))
+q = int(input("Enter the value of q: "))
+
+start_time = time.perf_counter()
+
+#calculating n and totient
+n=p*q
+eul=(p-1)*(q-1)
+e=3
+
+#encrypting m (message)
+m= 11
+public_e=public_exponent(e,eul)
+C = pow(m, e, n)
 
 # Brute force attack to find the private exponent d
 def brutedecrypt(e, n, C, m):
@@ -16,20 +31,6 @@ def brutedecrypt(e, n, C, m):
         attempts+=1
         d += 1
 
-#getting p and q
-p = int(input("Enter the value of p: "))
-q = int(input("Enter the value of q: "))
-
-start_time = time.perf_counter()
-#calculating n and totient
-n=p*q
-eul=(p-1)*(q-1)
-e=3
-
-#encrypting m (message)
-m= 11
-public_e=public_exponent(e,eul)
-C = pow(m, e, n)
 
 d, attempts= brutedecrypt(e,n,C, m)
 d = d % eul  # Ensure d is positive

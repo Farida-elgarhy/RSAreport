@@ -3,6 +3,14 @@ import random
 import time 
 # from keygeneration import keygeneration
 
+#getting p and q values
+p = int(input("Enter the value of p: "))
+q = int(input("Enter the value of q: "))
+
+start_time = time.perf_counter()
+n = p * q
+eul = (p - 1) * (q - 1)
+e = 3
 #to calculate extended gcd     
 def extended_gcd(a, b):
     x0, x1, y0, y1 = 1, 0, 0, 1
@@ -21,6 +29,10 @@ def public_exponent(e,eul):
             e += 1
     return e
 
+e=public_exponent(e,eul)
+#calculating d (private key)
+gcd, d, _ = extended_gcd(e, eul)
+d = d % eul  # Ensure d is positive
 
 #factorising n to get p and q
 def factorize(n):
@@ -37,19 +49,19 @@ def factorize(n):
             break
     return factors
 
-#getting p and q values
-p = int(input("Enter the value of p: "))
-q = int(input("Enter the value of q: "))
+# #getting p and q values
+# p = int(input("Enter the value of p: "))
+# q = int(input("Enter the value of q: "))
 
-start_time = time.perf_counter()
+# start_time = time.perf_counter()
 
-n = p * q
-eul = (p - 1) * (q - 1)
-e = 3
-e=public_exponent(e,eul)
-#calculating d (private key)
-gcd, d, _ = extended_gcd(e, eul)
-d = d % eul  # Ensure d is positive
+# n = p * q
+# eul = (p - 1) * (q - 1)
+# e = 3
+# e=public_exponent(e,eul)
+# #calculating d (private key)
+# gcd, d, _ = extended_gcd(e, eul)
+# d = d % eul  # Ensure d is positive
 
 #factorise n to obtain p and q
 factors=factorize(n)
