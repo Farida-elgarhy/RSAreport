@@ -95,12 +95,28 @@ def brute_force(p, q):
     private_key = {'n': n, 'd': d}
     return n, eul, e, public_key, private_key, C, M, attempts
 
-# Test values for p and q
-p = generate_random_prime_number(8)
-q = generate_random_prime_number(8)
-#ensuring that p and q are not the same number
-while p == q:
-    q = generate_random_prime_number(8)
+# # Test values for p and q
+# p = generate_random_prime_number(8)
+# q = generate_random_prime_number(8)
+# #ensuring that p and q are not the same number
+# while p == q:
+#     q = generate_random_prime_number(8)
+try:       
+    bit_length=int(input("enter bit length 8 or 16 "))
+    if bit_length==8:
+        p=generate_random_prime_number(8)
+        q=generate_random_prime_number(8)
+        print("8 bit p is: ", p)
+        print("8 bit q is: ", q)
+    elif bit_length==16:
+        p=generate_random_prime_number(16)
+        q=generate_random_prime_number(16)
+        print("16 bit p is: ", p)
+        print("16 bit q is: ", q)
+    else: 
+        print("bit length has to be 8 or 16, try again")
+except ValueError as error:
+    print("error: ",error)
 
 # Perform factorisation
 start_time_factorisation = time.perf_counter()
@@ -127,3 +143,14 @@ print("Brute force attack results:")
 print(f"p is: {p} and q is: {q}, message is: {M_bruteforce}")
 print(f"Brute force attack succeeded after {attempts_bruteforce} attempts! Private exponent d is: {private_key_bruteforce['d']}")
 print(f"Brute force attack took: {time_taken_bruteforce} milli seconds")
+
+# def brutedecrypt(e, n, C,m):
+#     attempts = 0
+#     d = 1
+#     while True:
+#         M = pow(C, d, n)
+#         if M == m:
+#             break
+#         d += 1
+#         attempts += 1
+#     return d, attempts

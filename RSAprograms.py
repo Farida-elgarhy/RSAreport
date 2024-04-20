@@ -1,40 +1,7 @@
 import math
 import random
 import time 
-
-#to make sure number is prime 
-def prime_numbers(n):
-   if n<=1:
-       return False
-   if n==2:
-       return True
-   if n % 2 == 0 and n > 2:
-       return False
-   else:
-       for i in range(3, int(math.sqrt(n) + 1), 2):
-           if n % i == 0:
-               return False
-       return True
-
-#to generate random prime numbers for p and q
-def generate_random_prime_number(bit_length = 8):
-   while True:
-       number = random.getrandbits(bit_length)
-       if number % 2 != 0 and prime_numbers(number) and number.bit_length() == bit_length:
-           return number
-
-start_time = time.perf_counter()
-#generating random primes for p and q       
-p=generate_random_prime_number(8)
-q=generate_random_prime_number(8)
-#ensuring that p and q are not the same number
-while p == q:
-    q = generate_random_prime_number(8)
-
-#calculating n and totient
-n=p*q
-eul=(p-1)*(q-1)
-e=3
+# from keygeneration import keygeneration
 
 #to calculate extended gcd     
 def extended_gcd(a, b):
@@ -54,11 +21,6 @@ def public_exponent(e,eul):
             e += 1
     return e
 
-e=public_exponent(e,eul)
-
-#calculating d (private key)
-gcd, d, _ = extended_gcd(e, eul)
-d = d % eul  # Ensure d is positive
 
 #factorising n to get p and q
 def factorize(n):
@@ -75,6 +37,20 @@ def factorize(n):
             break
     return factors
 
+#getting p and q values
+p = int(input("Enter the value of p: "))
+q = int(input("Enter the value of q: "))
+
+start_time = time.perf_counter()
+
+n = p * q
+eul = (p - 1) * (q - 1)
+e = 3
+e=public_exponent(e,eul)
+#calculating d (private key)
+gcd, d, _ = extended_gcd(e, eul)
+d = d % eul  # Ensure d is positive
+
 #factorise n to obtain p and q
 factors=factorize(n)
 factorisedp=factors[1]
@@ -86,13 +62,14 @@ public_key = {'n': n, 'e': e}
 private_key = {'n': n, 'd': d}
 
 #encrypting and decrypting m (message)
-m= 112
+m= 11
 C = pow(m, e, n)
 M = pow(C, d, n)
 end_time = time.perf_counter()
 time_taken = (end_time - start_time) * 1000  # Convert to milliseconds
 
 #print statements for results 
+print("factorisation results: ")
 print(f"p is: {p} and q is: {q}")
 print("n is: ", n, "\neul is: ", eul, "\ne is: ", e)
 print(f"factorised p and q from modulus of n are: {factorisedp}, {factorisedq}")
