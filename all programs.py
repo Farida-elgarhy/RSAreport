@@ -98,6 +98,9 @@ def brute_force(p, q):
 # Test values for p and q
 p = generate_random_prime_number(8)
 q = generate_random_prime_number(8)
+#ensuring that p and q are not the same number
+while p == q:
+    q = generate_random_prime_number(8)
 
 # Perform factorisation
 start_time_factorisation = time.perf_counter()
@@ -118,9 +121,9 @@ print("n is: ", n_factorisation, "\neul is: ", eul_factorisation, "\ne is: ", e_
 print(f"factorised p and q from modulus of n are: {factorisedp}, {factorisedq}")
 print("Public Key:", public_key_factorisation, "\nPrivate Key:", private_key_factorisation)
 print("\nEncrypted Message:", C_factorisation, "\nDecrypted Message:", M_factorisation)
-print(f"Factorisation time: {time_taken_factorisation:.6f} seconds\n")
+print(f"Factorisation time: {time_taken_factorisation} milli seconds\n")
 
 print("Brute force attack results:")
 print(f"p is: {p} and q is: {q}, message is: {M_bruteforce}")
 print(f"Brute force attack succeeded after {attempts_bruteforce} attempts! Private exponent d is: {private_key_bruteforce['d']}")
-print(f"Brute force attack took: {time_taken_bruteforce:.6f} seconds")
+print(f"Brute force attack took: {time_taken_bruteforce} milli seconds")
