@@ -6,13 +6,15 @@ import time
 # getting p and q
 p = int(input("Enter the value of p: "))
 q = int(input("Enter the value of q: "))
+e = int(input("enter e: "))
 
+#starting time calculation
 start_time = time.perf_counter()
 
 # calculating n and totient
 n = p * q
 eul = (p - 1) * (q - 1)
-e = int(input("enter e: "))
+
 
 # encrypting m (message)
 m = 11
@@ -35,11 +37,11 @@ d, attempts = brutedecrypt(e, n, C)
 
 d = d % eul  # Ensure d is positive
 M = pow(C, d, n)
-public_key = {'n': n, 'e': e}
-private_key = {'n': n, 'd': d}
+
 end_time = time.perf_counter()
 time_taken = (end_time - start_time) * 1000  # Convert to milliseconds
-
+public_key = {'n': n, 'e': e}
+private_key = {'n': n, 'd': d}
 # Print the results
 print("brute force results: ")
 print(f"p is: {p} and q is: {q}, message is: {M}")

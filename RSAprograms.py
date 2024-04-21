@@ -1,8 +1,7 @@
 import math
-# import random
 import time 
 
-#getting p and q values
+#getting p and q values 
 p = int(input("Enter the value of p: "))
 q = int(input("Enter the value of q: "))
 
@@ -61,17 +60,16 @@ factors=factorize(n)
 factorisedp=factors[1]
 factorisedq=factors[0]
 
-
-#calculating public and private key
-public_key = {'n': n, 'e': e}
-private_key = {'n': n, 'd': d}
-
 #encrypting and decrypting m (message)
 m= 11
 C = pow(m, e, n)
 M = pow(C, d, n)
 end_time = time.perf_counter()
 time_taken = (end_time - start_time) * 1000  # Convert to milliseconds
+
+#calculating public and private key
+public_key = {'n': n, 'e': e}
+private_key = {'n': n, 'd': d}
 
 #print statements for results 
 print("factorisation results: ")
