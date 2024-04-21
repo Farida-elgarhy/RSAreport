@@ -1,7 +1,6 @@
 import math
 import random
 
-
 #to make sure number is prime 
 def prime_numbers(n):
    if n<=1:
@@ -23,7 +22,7 @@ def generate_random_prime_number(bit_length):
        if number % 2 != 0 and prime_numbers(number) and number.bit_length() == bit_length:
            return number
        
-# #to calculate extended gcd     
+#to calculate extended gcd     
 def extended_gcd(a, b):
     x0, x1, y0, y1 = 1, 0, 0, 1
     while b:
@@ -53,9 +52,12 @@ def keygeneration(bit_length):
     else: 
         print("bit length has to be 8 or 16, try again")
         return None, None
+    
+#based on bit length generating random p and q
 bit_length=int(input("enter bit length 8 or 16 "))
 p,q=keygeneration(bit_length)
 
+# Ensure that p and q are generated successfully
 if p and q:
     n = p * q
     eul = (p - 1) * (q - 1)
@@ -66,7 +68,7 @@ if p and q:
     gcd, d, _ = extended_gcd(e, eul)
     d = d % eul  # Ensure d is positive
 
-
+    #printing results
     print(f"{bit_length} bit p is: ", p)
     print(f"{bit_length} bit q is: ", q)
     print(f"n is: {n}")

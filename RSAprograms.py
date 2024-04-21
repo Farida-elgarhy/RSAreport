@@ -5,10 +5,13 @@ import time
 p = int(input("Enter the value of p: "))
 q = int(input("Enter the value of q: "))
 
+#starting time calculation
 start_time = time.perf_counter()
+
+#calculating n and totient
 n = p * q
 eul = (p - 1) * (q - 1)
-e = 3
+
 #to calculate extended gcd     
 def extended_gcd(a, b):
     x0, x1, y0, y1 = 1, 0, 0, 1
@@ -19,6 +22,7 @@ def extended_gcd(a, b):
     return a, x0, y0
 
 
+e = 3
 #finds a suitable public exponent(e)
 def public_exponent(e,eul):
     while e < eul:
@@ -29,9 +33,10 @@ def public_exponent(e,eul):
     return e
 
 e=public_exponent(e,eul)
-#calculating d (private key)
 
+#calculating d (private key)
 gcd, d, _ = extended_gcd(e, eul)
+
 def calculate_d(e, phi):
     _, d, _ = extended_gcd(e, phi)
     return d % eul
@@ -64,12 +69,15 @@ factorisedq=factors[0]
 m= 11
 C = pow(m, e, n)
 M = pow(C, d, n)
-end_time = time.perf_counter()
-time_taken = (end_time - start_time) * 1000  # Convert to milliseconds
 
 #calculating public and private key
 public_key = {'n': n, 'e': e}
 private_key = {'n': n, 'd': d}
+
+#end of time calculation
+end_time = time.perf_counter()
+time_taken = (end_time - start_time) * 1000  # Convert to milliseconds
+
 
 #print statements for results 
 print("factorisation results: ")
