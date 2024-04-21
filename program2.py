@@ -2,10 +2,13 @@ import math
 import random
 import time 
 from RSAprograms import public_exponent
-
+from keygeneration import generate_random_prime_number
 # getting p and q
-p = int(input("Enter the value of p: "))
-q = int(input("Enter the value of q: "))
+# p = int(input("Enter the value of p: "))
+# q = int(input("Enter the value of q: "))
+
+p=generate_random_prime_number(8)
+q=generate_random_prime_number(8)
 
 start_time = time.perf_counter()
 
@@ -39,3 +42,9 @@ public_key = {'n': n, 'e': e}
 private_key = {'n': n, 'd': d}
 end_time = time.perf_counter()
 time_taken = (end_time - start_time) * 1000  # Convert to milliseconds
+
+# Print the results
+print("brute force results: ")
+print(f"p is: {p} and q is: {q}, message is: {M}")
+print(f"Brute force attack succeeded after {attempts} attempts! Private exponent d is: {d}")
+print(f"Brute force attack took: {time_taken:.6f} milliseconds")
