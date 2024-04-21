@@ -1,7 +1,6 @@
 import math
-import random
+# import random
 import time 
-# from keygeneration import keygeneration
 
 #getting p and q values
 p = int(input("Enter the value of p: "))
@@ -32,6 +31,7 @@ def public_exponent(e,eul):
 
 e=public_exponent(e,eul)
 #calculating d (private key)
+
 gcd, d, _ = extended_gcd(e, eul)
 def calculate_d(e, phi):
     _, d, _ = extended_gcd(e, phi)
@@ -55,20 +55,6 @@ def factorize(n):
                 factors.append(n)
             break
     return factors
-
-# #getting p and q values
-# p = int(input("Enter the value of p: "))
-# q = int(input("Enter the value of q: "))
-
-# start_time = time.perf_counter()
-
-# n = p * q
-# eul = (p - 1) * (q - 1)
-# e = 3
-# e=public_exponent(e,eul)
-# #calculating d (private key)
-# gcd, d, _ = extended_gcd(e, eul)
-# d = d % eul  # Ensure d is positive
 
 #factorise n to obtain p and q
 factors=factorize(n)
