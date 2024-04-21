@@ -31,7 +31,7 @@ def brutedecrypt(e, n, C):
         d += 1
     return d, attempts
 
-d, attempts = brutedecrypt(C, n, e)
+d, attempts = brutedecrypt(e, n, C)
 
 
 d = d % eul  # Ensure d is positive
