@@ -20,6 +20,7 @@ def extended_gcd(a, b):
         y0, y1 = y1, y0 - q * y1
     return a, x0, y0
 
+
 #finds a suitable public exponent(e)
 def public_exponent(e,eul):
     while e < eul:
@@ -32,6 +33,12 @@ def public_exponent(e,eul):
 e=public_exponent(e,eul)
 #calculating d (private key)
 gcd, d, _ = extended_gcd(e, eul)
+def calculate_d(e, phi):
+    _, d, _ = extended_gcd(e, phi)
+    return d % eul
+
+# Assuming e and phi are already calculated
+d = calculate_d(e, eul)
 d = d % eul  # Ensure d is positive
 
 #factorising n to get p and q

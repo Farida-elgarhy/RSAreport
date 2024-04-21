@@ -3,47 +3,47 @@ import random
 import time 
 from RSAprograms import public_exponent
 
-# from keygeneration import generate_random_prime_number
-
-#getting p and q
+# getting p and q
 p = int(input("Enter the value of p: "))
 q = int(input("Enter the value of q: "))
 
 start_time = time.perf_counter()
 
-#calculating n and totient
-n=p*q
-eul=(p-1)*(q-1)
-e=3
+# calculating n and totient
+n = p * q
+eul = (p - 1) * (q - 1)
+e = 3
 
-#encrypting m (message)
-m= 11
-public_e=public_exponent(e,eul)
+# encrypting m (message)
+m = 11
+public_e = public_exponent(e, eul)
 C = pow(m, e, n)
 
 # Brute force attack to find the private exponent d
-def brutedecrypt(e, n, C, m):
+def brutedecrypt(e, n, C):
+    # max_attempts = 2**16
     d = 2
-    attempts=0
+    attempts = 0
     while True:
         if pow(C, d, n) == m:
             return d, attempts
-        attempts+=1
+        attempts += 1
         d += 1
+    return None, attempts
 
+d, attempts = brutedecrypt(e, n, C)
+if d is not None:
+    d = d % eul  # Ensure d is positive
+    M = pow(C, d, n)
+    public_key = {'n': n, 'e': e}
+    private_key = {'n': n, 'd': d}
+    end_time = time.perf_counter()
+    time_taken = (end_time - start_time) * 1000  # Convert to milliseconds
 
-d, attempts= brutedecrypt(e,n,C, m)
-d = d % eul  # Ensure d is positive
-M = pow(C, d, n)
-public_key = {'n': n, 'e': e}
-private_key = {'n': n, 'd': d}
-
-
-end_time = time.perf_counter()
-time_taken = (end_time - start_time) * 1000  # Convert to milliseconds
-
-# Print the results
-print("brute force results: ")
-print(f"p is: {p} and q is: {q}, message is: {M}")
-print(f"Brute force attack succeeded after {attempts} attempts! Private exponent d is: {d}")
-print(f"Brute force attack took: {time_taken:.6f} seconds")
+    # Print the results
+    print("brute force results: ")
+    print(f"p is: {p} and q is: {q}, message is: {M}")
+    print(f"Brute force attack succeeded after {attempts} attempts! Private exponent d is: {d}")
+    print(f"Brute force attack took: {time_taken:.6f} milliseconds")
+else:
+    print(f"Brute force attack did not find the private exponent within the maximum number of attempts: {attempts}")
