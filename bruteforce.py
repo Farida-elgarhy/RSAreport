@@ -1,5 +1,4 @@
 import math
-import random
 import time 
 
 # getting p and q values
@@ -7,8 +6,8 @@ p = int(input("Enter the value of p: "))
 q = int(input("Enter the value of q: "))
 e = int(input("enter e: "))
 
-#starting time calculation
-start_time = time.perf_counter()
+
+
 
 # calculating n and totient
 n = p * q
@@ -23,23 +22,20 @@ def brutedecrypt(e, n, C):
     d = 1
     attempts = 0
     while True:
-        M=pow(C, d, n)
-        if M == m:
+        if pow(C, d, n) == m:
             break
         attempts += 1
         d += 1
     return d, attempts
 
+start_time = time.perf_counter()
 d, attempts = brutedecrypt(e, n, C)
-
-
 d = d % eul  # Ensure d is positive
-
+end_time = time.perf_counter()
 #decrypting the message (m)
 M = pow(C, d, n)
 
-#ending time calculation
-end_time = time.perf_counter()
+# time calculation
 time_taken = (end_time - start_time) * 1000  # Convert to milliseconds
 
 #calculating public and private key

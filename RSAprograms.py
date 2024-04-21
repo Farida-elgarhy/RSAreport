@@ -5,12 +5,35 @@ import time
 p = int(input("Enter the value of p: "))
 q = int(input("Enter the value of q: "))
 
-#starting time calculation
-start_time = time.perf_counter()
-
 #calculating n and totient
 n = p * q
-eul = (p - 1) * (q - 1)
+
+#factorising n to get p and q
+def factorize(n):
+    factors=[]
+    d=2
+    while n>1:
+        while n%d==0:
+            factors.append(d)
+            n//=d
+        d+=1
+        if d*d>n:
+            if n>1:
+                factors.append(n)
+            break
+    return factors
+
+
+
+start_time = time.perf_counter()
+#factorise n to obtain p and q
+factors=factorize(n)
+end_time = time.perf_counter()
+factorisedp=factors[1]
+factorisedq=factors[0]
+
+
+eul = (factorisedp- 1) * (factorisedq - 1)
 
 #to calculate extended gcd     
 def extended_gcd(a, b):
@@ -45,26 +68,6 @@ def calculate_d(e, phi):
 d = calculate_d(e, eul)
 d = d % eul  # Ensure d is positive
 
-#factorising n to get p and q
-def factorize(n):
-    factors=[]
-    d=2
-    while n>1:
-        while n%d==0:
-            factors.append(d)
-            n//=d
-        d+=1
-        if d*d>n:
-            if n>1:
-                factors.append(n)
-            break
-    return factors
-
-#factorise n to obtain p and q
-factors=factorize(n)
-factorisedp=factors[1]
-factorisedq=factors[0]
-
 #encrypting and decrypting m (message)
 m= 11
 C = pow(m, e, n)
@@ -74,8 +77,7 @@ M = pow(C, d, n)
 public_key = {'n': n, 'e': e}
 private_key = {'n': n, 'd': d}
 
-#end of time calculation
-end_time = time.perf_counter()
+# time calculation
 time_taken = (end_time - start_time) * 1000  # Convert to milliseconds
 
 
